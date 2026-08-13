@@ -5,6 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.metrics import mean_absolute_error, r2_score
+from sklearn.ensemble import RandomForestRegressor
 # this transformer will help us to apply one hot encoding to categorical columns and leave the numerical
 # columns as it is. We will use this transformer in our pipeline
 
@@ -45,5 +46,21 @@ test_r2 = r2_score(y_test, y_pred)
 
 print(f"Train R2: {train_r2:.4f}")
 print(f"Test R2: {test_r2:.4f}")
+# The results show us that the model is not overfitting 
 
 
+model = RandomForestRegressor(n_estimators=200, random_state=42)
+model.fit(x_train_encoded, y_train)
+y_pred=model.predict(x_test_encoded)
+mae = mean_absolute_error(y_test, y_pred)
+r2 = r2_score(y_test, y_pred)
+
+print(f"MAE: {mae}")
+print(f"R2: {r2}")
+
+train_pred = model.predict(x_train_encoded)
+
+train_r2 = r2_score(y_train, train_pred)
+
+print(f"Train R2: {train_r2:.4f}")
+print(f"Test R2: {r2:.4f}")
