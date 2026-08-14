@@ -1,19 +1,18 @@
 # Health Insurance Suggestion API
 
-A machine learning project that predicts estimated health insurance charges based on personal and demographic information.
+An end-to-end machine learning application that predicts estimated health insurance charges based on personal and demographic information.
 
 ## Project Status
 
-🚧 **In Development**
+🚧 **Backend Complete — Frontend In Progress**
 
-The machine learning pipeline is currently being built. The first baseline model using Linear Regression has been trained and evaluated.
+The machine learning pipeline and FastAPI backend are complete, tested, and ready to be connected to a user-facing frontend.
 
 ## Dataset
 
-The project uses the Medical Cost Personal Dataset.
+The project uses the Medical Cost Personal Dataset containing 1,338 records.
 
-Features:
-
+### Features
 - Age
 - Sex
 - BMI
@@ -21,43 +20,49 @@ Features:
 - Smoking status
 - Region
 
-Target:
-
+### Target
 - Insurance charges
 
-The dataset contains 1,338 records.
+## Machine Learning
 
-## Current ML Pipeline
+### Model Comparison
 
-```text
-Dataset
-   ↓
-Exploratory Data Analysis
-   ↓
-Train/Test Split
-   ↓
-Categorical Feature Encoding
-   ↓
-Linear Regression
-   ↓
-Model Evaluation
-```
+| Model | MAE | R² Score |
+|---|---:|---:|
+| Linear Regression | ~$4,181 | ~0.784 |
+| **Random Forest** | **~$2,528** | **~0.864** |
 
-## Current Results
+Random Forest significantly outperformed the Linear Regression baseline and is currently used by the API.
 
-### Linear Regression Baseline
+### ML Pipeline
 
-- MAE: ~$4,181
-- R² Score: ~0.784
+Dataset → Train/Test Split → ColumnTransformer → OneHotEncoder → Random Forest Regressor → Model Evaluation → Joblib Model
 
-### Random Forest
+The preprocessing and model are combined into a single Scikit-learn Pipeline and saved with Joblib, ensuring the same preprocessing is applied during inference.
 
-- MAE: ~$2,528
-- R² Score: ~0.864
+## Backend
 
-Random Forest significantly improves upon the Linear Regression baseline, reducing the average error while explaining more variation in insurance charges.
+The prediction service is built with FastAPI.
 
-The Random Forest model currently performs best on the test set.
+### API Endpoints
+
+- `GET /` — API status and information
+- `GET /health` — Health check
+- `POST /predict` — Predict estimated insurance charges
+
+### Prediction Flow
+
+Client → POST /predict → Pydantic Validation → Pandas DataFrame → Saved ML Pipeline → Random Forest → Predicted Insurance Charge → JSON Response
+
+### Example Request
+
+`{"age":40,"sex":"male","bmi":30.0,"children":2,"smoker":"no","region":"northwest"}`
+
+### Example Response
+
+`{"predicted_charge":7140.83,"currency":"USD","model":"Random Forest Regressor"}`
+
+The API uses Pydantic validation to reject invalid inputs before they reach the machine learning pipeline.
 
 ## Tech Stack
 
@@ -71,7 +76,6 @@ The Random Forest model currently performs best on the test set.
 
 ## Project Structure
 
-```text
 health_insurance_suggestion_api/
 ├── insurance.csv
 ├── explore.py
@@ -79,17 +83,30 @@ health_insurance_suggestion_api/
 ├── main.py
 ├── .gitignore
 └── venv/
-```
+
+## Current Features
+
+- [x] Exploratory data analysis
+- [x] Train/test split
+- [x] Categorical feature encoding
+- [x] Linear Regression baseline
+- [x] Random Forest model
+- [x] Model comparison
+- [x] Scikit-learn Pipeline
+- [x] Model persistence with Joblib
+- [x] FastAPI backend
+- [x] Pydantic input validation
+- [x] Structured API responses
+- [x] Swagger API testing
+- [x] Edge-case and validation testing
 
 ## Planned Work
 
-- [x] Compare Linear Regression with Random Forest
-- [ ] Select and save the final model
-- [ ] Build the FastAPI prediction endpoint
-- [ ] Add Pydantic input validation
-- [ ] Test the API
-- [ ] Add API documentation
-- [ ] Improve README with final results
-- [ ] Deploy the API
+- [ ] Build user-facing frontend
+- [ ] Connect frontend to FastAPI
+- [ ] Improve UI/UX
+- [ ] Deploy the complete application
 
- 
+## Disclaimer
+
+This project is built for educational and demonstration purposes. Predicted charges are estimates generated from the training dataset and should not be considered actual insurance quotes or financial advice.

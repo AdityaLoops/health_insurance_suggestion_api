@@ -1,12 +1,12 @@
 import joblib
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 import pandas as pd
 from pydantic import BaseModel, Field
 from typing import Literal
 
 app = FastAPI(
     title = "Health Insurance Suggestion API",
-    description = "API for prediction health insurance charges using a trained Random Forest Regressor model",
+    description="API for predicting health insurance charges using a trained Random Forest Regressor model.",
     version ="1.0.0"
 )
 
@@ -20,6 +20,10 @@ class InsuranceFeatures(BaseModel):
     smoker: Literal["yes", "no"] = Field(description="Is the individual a smoker?")
     region: Literal["southwest", "southeast", "northwest", "northeast"] = Field(description="Region of the individual")
 
+class PredictionResponse(BaseModel):
+    predicted_charge: float
+    currency: str
+    model: str
 
 @app.get("/")
 def home():
@@ -32,13 +36,16 @@ def health():
     return {
         "status": "healthy",
         "model": "Random forest Regressor",
-        "model loaded": True
+        "model_loaded": True
     }
-
-@app.post("/predict")
+# output format
+@app.post("/predict", response_model=PredictionResponse) 
+# input format
 def predict(features: InsuranceFeatures):
     input_data = pd.DataFrame([features.model_dump()])
     prediction = model.predict(input_data)[0]
     return {
-        "predicted charge": round(float(prediction),2)
+        "predicted_charge": round(float(prediction),2),
+        "currency": "USD",
+        "model": "Random Forest Regressor"
     }
