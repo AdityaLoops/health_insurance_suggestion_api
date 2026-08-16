@@ -3,13 +3,20 @@ from fastapi import FastAPI
 import pandas as pd
 from pydantic import BaseModel, Field
 from typing import Literal
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(
     title = "Health Insurance Suggestion API",
     description="API for predicting health insurance charges using a trained Random Forest Regressor model.",
     version ="1.0.0"
 )
-
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://0.0.0.0:5500"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 model = joblib.load("insurance_model.joblib")
 
 class InsuranceFeatures(BaseModel):
