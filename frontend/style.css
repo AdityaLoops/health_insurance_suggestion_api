@@ -82,3 +82,30 @@ form select:focus {
     border-color: #5F8D72;
     box-shadow: 0 0 0 3px #DDEBE1;
 }
+#result-card {
+    width: min(90%, 500px);
+    margin: 0 auto 50px;
+    padding: 30px;
+    background: #DDEBE1;
+    border-radius: 16px;
+    text-align: center;
+    display: none;
+}
+
+#result-card h2 {
+    margin: 0 0 10px;
+    color: #26352B;
+}
+
+#prediction {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #5F8D72;
+}
+#error-message {
+    margin-top: 15px;
+    color: #B85C5C;
+    font-weight: 600;
+    display: none;
+}
