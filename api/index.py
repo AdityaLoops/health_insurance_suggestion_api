@@ -7,9 +7,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 
 app = FastAPI(
-    title = "Health Insurance Suggestion API",
+    title="Health Insurance Suggestion API",
     description="API for predicting health insurance charges using a trained Random Forest Regressor model.",
-    version ="1.0.0"
+    version="1.0.0",
+    docs_url="/api/docs",
+    openapi_url="/api/openapi.json"
 )
 app.add_middleware(
     CORSMiddleware,
@@ -35,13 +37,13 @@ class PredictionResponse(BaseModel):
     currency: str
     model: str
 
-@app.get("/")
+@app.get("/api/")
 def home():
     return {"message": "Health Insurance Suggestion API",
             "status": "running",
-            "docs" : "/docs"}
+            "docs" : "/api/docs"}
 
-@app.get("/health")
+@app.get("/api/health")
 def health():
     return {
         "status": "healthy",
@@ -49,7 +51,7 @@ def health():
         "model_loaded": True
     }
 # output format
-@app.post("/predict", response_model=PredictionResponse) 
+@app.post("/api/predict", response_model=PredictionResponse) 
 # input format
 def predict(features: InsuranceFeatures):
     input_data = pd.DataFrame([features.model_dump()])
