@@ -4,6 +4,7 @@ import pandas as pd
 from pydantic import BaseModel, Field
 from typing import Literal
 from fastapi.middleware.cors import CORSMiddleware
+from pathlib import Path
 
 app = FastAPI(
     title = "Health Insurance Suggestion API",
@@ -17,7 +18,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
-model = joblib.load("insurance_model.joblib")
+BASE_DIR  = Path(__file__).resolve().parent.parent
+
+model = joblib.load(BASE_DIR/"insurance_model.joblib")
 
 class InsuranceFeatures(BaseModel):
     age: int = Field(gt=0, le=110, description="Age of the individual")

@@ -28,7 +28,8 @@ errorMessage.style.display = "none";
     });
 
 
-    
+    const result = await response.json();
+
     if(!response.ok){
         console.log("API Error: ", result);
         prediction.textContent = "";
@@ -37,7 +38,6 @@ errorMessage.style.display = "none";
         resultCard.style.display="block";
         return;
     }
-    const result = await response.json();
 
 
     prediction.textContent = `$${result.predicted_charge.toFixed(2)}`;
