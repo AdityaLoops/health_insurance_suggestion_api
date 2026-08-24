@@ -4,77 +4,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Health Insurance Price Estimator</title>
-    <link rel="stylesheet" href="style.css">
 
+    <title>Health Insurance Price Estimator</title>
+
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <header> <h1>Health Insurance Price Estimator</h1></header>
-    <p>Estimate your health insurance charges using machine learning</p>
-    
-    <main>
-        <section class="form-card">
-            <h2>Your Details</h2>
- 
-            <form id="insurance-form">
-                <label for="age">Age</label>
-                <input
-                type="number"
-                id="age"
-                name="age"
-                placeholder="18"
-                required
-                >
-                
-                <label for="sex">Sex</label>
-                <select id="sex" name="sex" required>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                </select>
- 
-                <label for="bmi">BMI</label>
-                <input
-                type="number"
-                id="bmi"
-                name="bmi"
-                step="0.1"
-                placeholder="15.2"
-                required
-                >
-                 
-                
-                <label for="children">Number Of Children</label>
-                <input type="number" id="children" name="children" min="0" placeholder="2" required> 
-                 
 
-                 <label for="smoker">Do You Smoke?</label>
-                 <select id="smoker" name="smoker" required>
-                    <option value="yes"> Yes</option>
-                    <option value="no">No</option>
-                 </select>
-                  
+    <div class="page">
 
-                  <label for="region"> Region </label>
-                  <select id="region" name="region" required>
-                    <option value="southwest">Southwest</option>
-                    <option value="southeast">Southeast</option>
-                    <option value="northwest">Northwest</option>
-                    <option value="northeast">Northeast</option>
-                  </select>
+        <header class="hero">
 
-                  <button type="submit">Estimate Insurance Cost</button>
-                
-            </form>
-        </section>
-        <section id="result-card">
+            <div class="eyebrow">
+                <span class="dot"></span>
+                MACHINE LEARNING TOOL
+            </div>
 
-    <h2>Estimated Insurance Cost</h2>
-    <p id="prediction">$0.00</p>
-    <p id="error-message"></p>
-</section>
-    </main>
+            <h1>
+                Health Insurance
+                <span>Price Estimator</span>
+            </h1>
+
+            <p>
+                Get an estimated annual insurance charge using a
+                trained Random Forest model.
+            </p>
+
+        </header>
+
+
+        <main>
+
+            <section class="estimator-card">
+
+                <div class="card-top">
+
+                    <div>
+                        <p class="section-label">01 / YOUR DETAILS</p>
+
+                        <h2>Tell us about yourself</h2>
+
+                        <p class="section-description">
+                            Enter the information below to generate
+                            your estimated insurance cost.
+                        </p>
+                    </div>
+
+                    <div class="model-badge">
+                        <span></span>
+                        Random Forest
+                    </div>
+
+                </div>
+
+
+                <form id="insurance-form">
+
+                    <div class="form-group">
+                        <label for="age">Age</label>
+
+                        <input
+                            type="number"
+                            id="age"
+                            name="age"
+                            placeholder="25"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="sex">Sex</label>
+
+                        <select id="sex" name="sex" required>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="bmi">BMI</label>
+
+                        <input
+                            type="number"
+                            id="bmi"
+                            name="bmi"
+                            step="0.1"
+                            placeholder="22.5"
+                            required
+                        >
+
+                        <span class="hint">
+                            Body Mass Index
+                        </span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="children">Children</label>
+
+                        <input
+                            type="number"
+                            id="children"
+                            name="children"
+                            min="0"
+                            placeholder="0"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="smoker">Smoker</label>
+
+                        <select id="smoker" name="smoker" required>
+                            <option value="no">No</option>
+                            <option value="yes">Yes</option>
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="region">Region</label>
+
+                        <select id="region" name="region" required>
+                            <option value="southwest">Southwest</option>
+                            <option value="southeast">Southeast</option>
+                            <option value="northwest">Northwest</option>
+                            <option value="northeast">Northeast</option>
+                        </select>
+                    </div>
+
+
+                    <button type="submit">
+
+                        <span>Estimate Insurance Cost</span>
+
+                        <strong>→</strong>
+
+                    </button>
+
+                </form>
+
+            </section>
+
+
+            <section id="result-card">
+
+                <div class="result-top">
+                    <p class="section-label">02 / PREDICTION</p>
+
+                    <span class="result-status">
+                        ESTIMATE READY
+                    </span>
+                </div>
+
+
+                <p class="result-label">
+                    ESTIMATED ANNUAL COST
+                </p>
+
+
+                <h2 id="prediction">
+                    $0.00
+                </h2>
+
+
+                <div class="result-line"></div>
+
+
+                <p class="result-description">
+                    Prediction generated by the trained
+                    Random Forest Regressor model.
+                </p>
+
+
+                <p id="error-message"></p>
+
+            </section>
+
+        </main>
+
+
+        <footer>
+
+            <div>
+                FastAPI
+                <span>•</span>
+                Random Forest
+                <span>•</span>
+                Vercel
+            </div>
+
+            <p>
+                Built as a learning project while exploring
+                FastAPI and serverless deployment.
+            </p>
+
+        </footer>
+
+    </div>
+
+
     <script src="script.js"></script>
+
 </body>
 
 </html>
